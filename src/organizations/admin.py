@@ -20,4 +20,4 @@ class OrganizationImageInline(admin.TabularInline):
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'phone', 'website']
-    inlines = [OrganizationImage]
+    inlines = [OrganizationImageInline]
