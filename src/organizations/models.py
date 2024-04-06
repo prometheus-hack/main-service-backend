@@ -31,12 +31,12 @@ class Category(models.Model):
 
 class Organization(models.Model):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=256)
-    phone = models.CharField(max_length=20)
+    name = models.CharField(max_length=256, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, default=None)
-    website = models.URLField()
-    description = models.TextField()
-    owner = models.ForeignKey('jwtauth.CustomUser', on_delete=models.SET_NULL, null=True)
+    website = models.URLField(blank=True)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey('jwtauth.CustomUser', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name

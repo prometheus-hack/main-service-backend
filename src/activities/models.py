@@ -14,12 +14,12 @@ class FavouriteOrganization(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-# class Test(models.Model):
-#     title = models.CharField(max_length=64)
-#     image = models.ImageField(upload_to='images/tests/')
-#
-#
-# class Bonus(models.Model):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     amount = models.IntegerField()
-#     descr = models.TextField()
+class Test(models.Model):
+    title = models.CharField(max_length=64)
+    image = models.ImageField(upload_to='images/tests/')
+
+
+class Bonus(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    descr = models.TextField()
