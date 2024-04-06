@@ -47,7 +47,7 @@ class OrganizationRepository(BaseRepository):
     @classmethod
     def get_for_map(cls, categories, coords1, coords2):
         rectangle = Polygon.from_bbox((*coords1, *coords2))
-        return cls.get_by_categories(categories).filter(location__within=rectangle)
+        return cls.get_by_categories(categories).filter(location__coords__within=rectangle)
 
 
 class OrganizationImagesRepository(BaseRepository):
