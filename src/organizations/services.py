@@ -46,7 +46,7 @@ def parse_organizations_to_db(data):
                 OrganizationRepository.create(
                     location=LocationRepository.get_or_create(
                         coords=Point(obj['latitude'], obj['longitude']),
-                        address=obj['address']
+                        address=obj['street'] + obj['housenumber']
                     ),
                     name=obj['name'],
                     phone=obj['phone'],
