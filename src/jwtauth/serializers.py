@@ -104,8 +104,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    friends = serializers.SerializerMethodField(read_only=True)
-    subscribers = serializers.SerializerMethodField(read_only=True)
+    count_friends = serializers.SerializerMethodField(read_only=True)
+    count_subscribers = serializers.SerializerMethodField(read_only=True)
 
     def get_friends(self, obj):
         return obj.friends.filter(approved=True).count()
@@ -115,4 +115,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user', 'first_name', 'last_name', 'title', 'avatar', 'friends', 'subscribers')
+        fields = ('user', 'first_name', 'last_name', 'title', 'avatar', 'count_friends', 'count_subscribers')
