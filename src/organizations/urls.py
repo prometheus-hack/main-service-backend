@@ -11,5 +11,5 @@ urlpatterns = [
     path('category/<int:id>/organizations/', OrganizationByCategoryListAPIView.as_view()),
     path('search/<str:name>/', OrganizationSearchListAPIView.as_view()),
     path('categories/', CategoryListAPIView.as_view()),
-    path('upload/', UploadAPIView.as_view())
+    # path('upload/', UploadAPIView.as_view())
 ] + router.urls
