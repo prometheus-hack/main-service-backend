@@ -63,6 +63,7 @@ class OrganizationSearchListAPIView(ListAPIView):
 
 class OrganizationMapFilterAPIView(ListAPIView):
     serializer_class = OrganizationListSerializer
+    pagination_class = None
 
     @method_decorator(vary_on_cookie)
     @method_decorator(cache_page(settings.CACHE_TTL))
