@@ -108,10 +108,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     count_subscribers = serializers.SerializerMethodField(method_name='get_subscribers', read_only=True)
 
     def get_friends(self, obj):
-        return obj.friends.filter(approved=True).count()
+        return obj.second_friend.filter(approved=True).count() + obj.first_friend.filter(approved=True).count()
 
     def get_subscribers(self, obj):
-        return obj.friends.filter(approved=False).count()
+        return obj.second_friend.filter(approved=False).count()
 
     class Meta:
         model = Profile
