@@ -42,15 +42,18 @@ MAPPING_DATA = {
 def parse_organizations_to_db(data):
     for k in data.keys():
         for obj in data[k]:
-            OrganizationRepository.create(
-                location=LocationRepository.get_or_create(
-                    coords=Point(float(obj['latitude']), float(obj['longitude'])),
-                    address=obj['street'] + obj['housenumber']
-                ),
-                name=obj['name'],
-                phone=obj['phone'],
-                website=obj['website'],
-                description=obj['description'],
-                category=CategoryRepository.get_by_name(MAPPING_DATA[obj['category']])
-            )
+            try:
+                OrganizationRepository.create(
+                    location=LocationRepository.get_or_create(
+                        coords=Point(float(obj['latitude']), float(obj['longitude'])),
+                        address=obj['street'] + obj['housenumber']
+                    ),
+                    name=obj['name'],
+                    phone=obj['phone'],
+                    website=obj['website'],
+                    description=obj['description'],
+                    category=CategoryRepository.get_by_name(MAPPING_DATA[obj['category']])
+                )
+            except Exception:
+                pass
 
