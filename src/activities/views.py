@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 
 from core.permissions import IsAuthorOrReadOnly
 from organizations.repositories import OrganizationRepository
 from .repositories import PhotoRepository, FavouriteOrganizationRepository
-from .serializers import PhotoSerializer, ListPhotoSerializer
+from .serializers import PhotoSerializer, ListPhotoSerializer, FavouriteOrganizationSerializer
 
 # Create your views here.
 
@@ -25,10 +26,9 @@ class PhotoListCreateAPIView(ListAPIView, CreateAPIView):
         serializer.save(user=self.request.user)
 
 
-class FavouriteOrganizationAPIView(ListAPIView, CreateAPIView, DestroyAPIView):
-
-    def get_queryset(self):
-        return FavouriteOrganizationRepository.get_filtered(user=self.request.user)
+class FavouriteOrganizationAPIView(CreateAPIView, DestroyAPIView):
+    serializer_class = FavouriteOrganizationSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         queryset = self.get_queryset()
@@ -41,3 +41,12 @@ class FavouriteOrganizationAPIView(ListAPIView, CreateAPIView, DestroyAPIView):
             pass
         else:
             serializer.save(user=self.request.user, organization=self.kwargs.get('id'))
+
+
+class FavouriteOrganizationsListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    pagination_class = PageNumberPagination
+    serializer_class = FavouriteOrganizationSerializer
+
+    def get_queryset(self):
+        return FavouriteOrganizationRepository.get_filtered(user=self.request.user)
