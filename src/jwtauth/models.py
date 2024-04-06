@@ -60,6 +60,6 @@ class Profile(models.Model):
 
 
 class Friend(models.Model):
-    first = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    second = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    first = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='first_friend')
+    second = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='second_friend')
     approved = models.BooleanField(default=False)
