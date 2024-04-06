@@ -2,8 +2,10 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
+from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
@@ -86,3 +88,5 @@ class UploadAPIView(APIView):
 
     def post(self, request):
         parse_organizations_to_db(self.request.data)
+        return Response({'message': 'da'}, status=status.HTTP_201_CREATED)
+
