@@ -19,7 +19,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ('coords', 'region', 'address')
+        fields = ('pk', 'coords', 'region', 'address')
 
 
 class OrganizationListSerializer(serializers.ModelSerializer):

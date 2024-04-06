@@ -5,9 +5,27 @@ from core.repositories import BaseRepository
 class CategoryRepository(BaseRepository):
     model = Category
 
+    @classmethod
+    def get_by_name(cls, name):
+        return cls.model.objects.get(name=name)
+
 
 class LocationRepository(BaseRepository):
     model = Location
+
+    @classmethod
+    def get_or_create(cls, coords, address, region=None):
+        if region is None:
+            region = 23
+        if Location.objects.get(coords=coords):
+            return Location.objects.get(coords=coords)
+        else:
+            obj = LocationRepository.create(
+                coords=coords,
+                region=region,
+                address=address
+            )
+            return obj
 
 
 class OrganizationRepository(BaseRepository):

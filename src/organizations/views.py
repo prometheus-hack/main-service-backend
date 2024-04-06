@@ -4,11 +4,13 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from core.permissions import IsAuthorOrReadOnly
 from .repositories import CategoryRepository, OrganizationRepository
 from .serializers import CategorySerializer, OrganizationListSerializer, OrganizationCreateSerializer
+from .services import parse_organizations_to_db
 
 
 # Create your views here.
@@ -78,3 +80,9 @@ class OrganizationByCategoryListAPIView(ListAPIView):
             return OrganizationRepository.get_by_category(int(category))
         else:
             return OrganizationRepository.all()
+
+
+class UploadAPIView(APIView):
+
+    def post(self, request):
+        parse_organizations_to_db(self.request.data)
