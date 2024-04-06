@@ -3,7 +3,7 @@ from rest_framework import serializers
 from core.fields import LocationField
 from jwtauth.serializers import CustomUserSerializer
 from .models import Category, Location, Organization, OrganizationImage
-from .repositories import OrganizationImagesRepository
+from .repositories import OrganizationImagesRepository, CategoryRepository
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,14 +28,15 @@ class OrganizationListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ('location', 'images', 'name', 'phone', 'description', 'website')
+        fields = ('location', 'images', 'name', 'phone', 'description', 'website', 'category')
 
 
 class OrganizationCreateSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     images = serializers.PrimaryKeyRelatedField(many=True, queryset=OrganizationImagesRepository)
     owner = serializers.StringRelatedField()
+    category = serializers.PrimaryKeyRelatedField(queryset=CategoryRepository.all())
 
     class Meta:
         model = Organization
-        fields = ('location', 'images', 'name', 'phone', 'website', 'description', 'owner')
+        fields = ('location', 'images', 'name', 'phone', 'website', 'description', 'owner', 'category')
