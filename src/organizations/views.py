@@ -64,6 +64,11 @@ class OrganizationSearchListAPIView(ListAPIView):
 class OrganizationMapFilterAPIView(ListAPIView):
     serializer_class = OrganizationListSerializer
 
+    @method_decorator(vary_on_cookie)
+    @method_decorator(cache_page(settings.CACHE_TTL))
+    def dispatch(self, request, *args, **kwargs):
+        return super(OrganizationMapFilterAPIView, self).dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
         ids = list(map(int, self.request.query_params.get('id').split(',')))
         coords1 = (float(self.request.query_params.get('lat1')), float(self.request.query_params.get('lon1')))
