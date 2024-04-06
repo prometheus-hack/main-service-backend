@@ -1,5 +1,5 @@
 from .models import Category, Location, Organization, OrganizationImage, Region
-from core.repositories import BaseRepository
+from core.repositories import BaseRepository, ObjectDoesNotExist
 
 
 class CategoryRepository(BaseRepository):
@@ -16,10 +16,12 @@ class LocationRepository(BaseRepository):
     @classmethod
     def get_or_create(cls, coords, address, region=None):
         if region is None:
-            region = 23
-        if Location.objects.get(coords=coords):
-            return Location.objects.get(coords=coords)
+            region = Region.objects.get_or_create(code=23)
         else:
+            region = Region.objects.get(code=region)
+        try:
+            return Location.objects.get(coords=coords)
+        except ObjectDoesNotExist:
             obj = LocationRepository.create(
                 coords=coords,
                 region=region,
