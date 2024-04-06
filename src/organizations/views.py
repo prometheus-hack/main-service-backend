@@ -21,7 +21,7 @@ class OrganizationViewSet(ModelViewSet):
     @method_decorator(vary_on_cookie)
     @method_decorator(cache_page(settings.CACHE_TTL))
     def dispatch(self, request, *args, **kwargs):
-        return super(OrganizationViewSet, self).dispatch(*args, **kwargs)
+        return super(OrganizationViewSet, self).dispatch(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -43,7 +43,7 @@ class OrganizationSearchListAPIView(ListAPIView):
     @method_decorator(vary_on_cookie)
     @method_decorator(cache_page(settings.CACHE_TTL))
     def dispatch(self, request, *args, **kwargs):
-        return super(OrganizationSearchListAPIView, self).dispatch(*args, **kwargs)
+        return super(OrganizationSearchListAPIView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         name = self.kwargs.get('name')
@@ -69,7 +69,7 @@ class OrganizationByCategoryListAPIView(ListAPIView):
     @method_decorator(vary_on_cookie)
     @method_decorator(cache_page(settings.CACHE_TTL))
     def dispatch(self, request, *args, **kwargs):
-        return super(OrganizationByCategoryListAPIView, self).dispatch(*args, **kwargs)
+        return super(OrganizationByCategoryListAPIView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         category = self.kwargs.get('id')
