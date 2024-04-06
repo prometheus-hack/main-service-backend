@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from organizations.repositories import OrganizationRepository
-from .models import Bonus, FavouriteOrganization, Photo
+from .models import FavouriteOrganization, Photo
 
 
 class PhotoSerializer(serializers.ModelSerializer):
