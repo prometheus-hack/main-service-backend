@@ -154,6 +154,33 @@ REST_FRAMEWORK = {
     ),
 }
 
+SWAGGER_SETTINGS = {
+    'DEFAULT_AUTHENTICATION': 'authorization.backends.JWTAuthentication',
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+}
+
+# access token lifetime
+ACCESS_TOKEN_LIFETIME = {
+    'seconds': 0,
+    'minutes': 0,
+    'hours': 0,
+    'days': 7
+}
+
+# refresh token lifetime
+REFRESH_TOKEN_LIFETIME = {
+    'seconds': 0,
+    'minutes': 0,
+    'hours': 0,
+    'days': 30
+}
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
