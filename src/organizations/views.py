@@ -75,7 +75,7 @@ class OrganizationMapFilterAPIView(ListAPIView):
         coords1 = (float(self.request.query_params.get('lat1')), float(self.request.query_params.get('lon1')))
         coords2 = (float(self.request.query_params.get('lat2')), float(self.request.query_params.get('lon2')))
         if ids and coords1 and coords2:
-            return OrganizationRepository.get_for_map(ids, coords1, coords2)
+            return OrganizationRepository.get_for_map(ids, coords1, coords2).select_related('location')
         else:
             return OrganizationRepository.all()[:50]
 
