@@ -14,11 +14,8 @@ class LocationRepository(BaseRepository):
     model = Location
 
     @classmethod
-    def get_or_create(cls, coords, address, region=None):
-        if region is None:
-            region = Region.objects.get_or_create(code=23)
-        else:
-            region = Region.objects.get(code=region)
+    def get_or_create(cls, coords, address):
+        region, _ = Region.objects.get_or_create(code=23)
         try:
             return Location.objects.get(coords=coords)
         except ObjectDoesNotExist:
