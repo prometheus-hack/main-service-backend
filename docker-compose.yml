@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  web:
+    restart: on-failure
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    command: gunicorn conf.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    restart: always
+    image: kartoza/postgis:13.0
+    environment:
+      - POSTGRES_USER=my_user
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=db
+    ports:
+      - 5432:5432
+  redis:
+    image: redis:5-alpine
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
