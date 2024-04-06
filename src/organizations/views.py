@@ -17,6 +17,7 @@ from .serializers import CategorySerializer, OrganizationListSerializer, Organiz
 class OrganizationViewSet(ModelViewSet):
     pagination_class = PageNumberPagination
     permission_classes = [IsAuthorOrReadOnly]
+    queryset = OrganizationRepository.all()
 
     @method_decorator(vary_on_cookie)
     @method_decorator(cache_page(settings.CACHE_TTL))
