@@ -24,7 +24,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
 class OrganizationListSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
-    images = serializers.StringRelatedField(source='image', many=True)
+    images = serializers.StringRelatedField(source='organization_images', many=True)
 
     class Meta:
         model = Organization
@@ -33,7 +33,7 @@ class OrganizationListSerializer(serializers.ModelSerializer):
 
 class OrganizationCreateSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
-    images = serializers.PrimaryKeyRelatedField(source='image', many=True, queryset=OrganizationImagesRepository)
+    images = serializers.PrimaryKeyRelatedField(source='organization_images', many=True, queryset=OrganizationImagesRepository)
     owner = serializers.StringRelatedField()
     category = serializers.PrimaryKeyRelatedField(queryset=CategoryRepository.all())
 
