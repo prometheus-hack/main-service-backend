@@ -61,6 +61,19 @@ class OrganizationSearchListAPIView(ListAPIView):
         return super().list(request, args, kwargs)
 
 
+class OrganizationMapFilter(ListAPIView):
+    serializer_class = OrganizationListSerializer
+
+    def get_queryset(self):
+        ids = list(map(int, self.request.query_params.get('id')))
+        coords1 = (float(self.request.query_params.get('lat1')), float(self.request.query_params.get('lon1')))
+        coords2 = (float(self.request.query_params.get('lat2')), float(self.request.query_params.get('lon2')))
+        if ids and coords1 and coords2:
+            return OrganizationRepository.get_for_map(ids, coords1, coords2)
+        else:
+            return OrganizationRepository.all()[:50]
+
+
 class CategoryListAPIView(ListAPIView):
     pagination_class = PageNumberPagination
     queryset = CategoryRepository.all()

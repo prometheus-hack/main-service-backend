@@ -1,3 +1,5 @@
+from django.contrib.gis.geos import Polygon
+
 from .models import Category, Location, Organization, OrganizationImage, Region
 from core.repositories import BaseRepository, ObjectDoesNotExist
 
@@ -37,6 +39,15 @@ class OrganizationRepository(BaseRepository):
     @classmethod
     def get_by_category(cls, category_id):
         return cls.model.objects.filter(category__pk=category_id)
+
+    @classmethod
+    def get_by_categories(cls, categories):
+        return cls.model.objects.filter(category__pk__in=categories)
+
+    @classmethod
+    def get_for_map(cls, categories, coords1, coords2):
+        rectangle = Polygon.from_bbox((*coords1, *coords2))
+        return cls.get_by_categories(categories).filter(location__within=rectangle)
 
 
 class OrganizationImagesRepository(BaseRepository):
