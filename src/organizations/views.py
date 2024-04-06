@@ -61,7 +61,7 @@ class OrganizationSearchListAPIView(ListAPIView):
         return super().list(request, args, kwargs)
 
 
-class OrganizationMapFilter(ListAPIView):
+class OrganizationMapFilterAPIView(ListAPIView):
     serializer_class = OrganizationListSerializer
 
     def get_queryset(self):
