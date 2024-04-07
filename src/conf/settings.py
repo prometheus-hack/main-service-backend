@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
-    'DEFAULT_AUTHENTICATION': 'authorization.backends.JWTAuthentication',
+    'DEFAULT_AUTHENTICATION': 'jwtauth.backends.JWTAuthentication',
     'SECURITY_DEFINITIONS': {
         'Token': {
             'type': 'apiKey',
