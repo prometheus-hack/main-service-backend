@@ -28,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             user=user
         )
         return {
-            'username': user.email,
+            'email': user.email,
             'access_token': user.access_token,
             'refresh_token': token.token
         }
