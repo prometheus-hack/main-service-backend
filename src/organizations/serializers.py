@@ -25,6 +25,7 @@ class LocationSerializer(serializers.ModelSerializer):
 class OrganizationListSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     images = serializers.StringRelatedField(source='organization_images', many=True)
+    category = serializers.StringRelatedField()
 
     class Meta:
         model = Organization
