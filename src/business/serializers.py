@@ -9,7 +9,7 @@ from .repositories import QRCodeUsingRepository
 
 class ListUsingQRCodeSerializer(serializers.Serializer):
     date = serializers.SerializerMethodField(method_name='get_timestamp', read_only=True)
-    scansCount = serializers.SerializerMethodField(method_name='get_scans_count', read_only=True)
+    scans_count = serializers.SerializerMethodField(method_name='get_scans_count', read_only=True)
 
     def get_timestamp(self, obj):
         return datetime.combine(obj['date'], time=time(), tzinfo=timezone(settings.TIME_ZONE)).timestamp()
@@ -23,7 +23,6 @@ class DetailedUsingQRCodeSerializer(serializers.ModelSerializer):
 
     timestamp = serializers.SerializerMethodField(method_name='get_timestamp', read_only=True)
     user = serializers.StringRelatedField(source='client', read_only=True)
-    discountPercent = serializers.IntegerField(source='discount')
 
     class Meta:
         model = QRCodeUsing
