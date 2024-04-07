@@ -221,7 +221,8 @@ class ProfileListAPIView(ListAPIView):
 
 class QRCodeRetrieveAPIView(RetrieveAPIView):
     serializer_class = QRCodeSerializer
-    queryset = QRCodeRepository.all()
+    # queryset = QRCodeRepository.all()
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return QRCodeRepository.get(self.request.user)

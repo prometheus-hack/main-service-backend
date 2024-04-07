@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreationForm, UserChangeForm
 
-from .models import CustomUser, Profile, RefreshToken
+from .models import CustomUser, Profile, RefreshToken, QRCode
 
 
 class UserAdmin(BaseUserAdmin):
@@ -40,3 +40,4 @@ admin.site.unregister(Group)
 
 admin.site.register(RefreshToken)
 admin.site.register(Profile)
+admin.site.register(QRCode)
