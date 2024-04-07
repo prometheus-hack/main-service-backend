@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.permissions import IsAuthorOrReadOnly
+from crypto.services import encrypt
 from .models import CustomUser, RefreshToken
 from .repositories import RefreshTokenRepository, ProfileRepository, UserRepository, QRCodeRepository
 from .serializers import RegistrationSerializer, LoginSerializer, CustomUserSerializer, ProfileSerializer, QRCodeSerializer
@@ -104,7 +105,7 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         ProfileRepository.create(user=UserRepository.get(serializer.data['email']))
-        QRCodeRepository.create(user=UserRepository.get(serializer.data['email']))
+        QRCodeRepository.create(qr_str=encrypt(serializer.data['email']), user=UserRepository.get(serializer.data['email']))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

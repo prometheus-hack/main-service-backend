@@ -69,9 +69,3 @@ class Friend(models.Model):
 class QRCode(models.Model):
     qr_str = models.CharField(max_length=1024, default='', blank=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        self.qr_str = encrypt(self.user.email)
-
