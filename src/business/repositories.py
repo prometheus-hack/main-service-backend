@@ -47,3 +47,7 @@ class QRCodeUsingRepository(BaseRepository):
         start_date, end_date = cls.__get_dates_from_timestamp(timestamp)
         return cls.model.objects.filter(organization__pk=organization_id, used_dt__gte=start_date,
                                         used_dt__lt=end_date).count()
+
+    @classmethod
+    def get_organizations(cls, user):
+        return cls.model.objects.filter(client=user)

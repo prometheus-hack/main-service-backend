@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from core.permissions import IsAuthorOrReadOnly
+from business.repositories import QRCodeUsingRepository
 from .repositories import CategoryRepository, OrganizationRepository
 from .serializers import CategorySerializer, OrganizationListSerializer, OrganizationCreateSerializer
 from .services import parse_organizations_to_db
@@ -111,6 +112,15 @@ class OwnerOrganizationListAPIView(ListAPIView):
 
     def get_queryset(self):
         return OrganizationRepository.get_by_owner(self.request.user)
+
+
+class VisitedOrganizationsListAPIView(ListAPIView):
+    serializer_class = OrganizationListSerializer
+    pagination_class = PageNumberPagination
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return QRCodeUsingRepository.get_organizations(self.request.user)
 
 
 class UploadAPIView(APIView):
