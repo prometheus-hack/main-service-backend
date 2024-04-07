@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 
 from core.permissions import IsAuthorOrReadOnly
 from .models import CustomUser, RefreshToken
-from .repositories import RefreshTokenRepository, ProfileRepository
+from .repositories import RefreshTokenRepository, ProfileRepository, UserRepository
 from .serializers import RegistrationSerializer, LoginSerializer, CustomUserSerializer, ProfileSerializer
 from .renderers import CustomUserJSONRenderer
 from .token_generators import generate_rt, generate_jwt
@@ -103,6 +103,7 @@ class RegistrationAPIView(APIView):
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        ProfileRepository.create(user=UserRepository.get(serializer.data['email']))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
