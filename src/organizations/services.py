@@ -1,5 +1,8 @@
 from django.contrib.gis.geos.point import Point
+from django.conf import settings
+import requests
 
+from business.repositories import QRCodeUsingRepository
 from .repositories import LocationRepository, OrganizationRepository, CategoryRepository
 
 
@@ -57,3 +60,32 @@ def parse_organizations_to_db(data):
             except Exception:
                 pass
 
+
+def send_locations_to_recommend_service():
+    for org in OrganizationRepository.all():
+        requests.post(url=settings.RECOMMEND_BASE_API_URL, data={
+            "location_id": org.location.pk,
+            "category_id": org.category.pk,
+            "latitude": org.location.coords[0],
+            "longitude": org.location.coords[1]
+        })
+
+
+def get_recommendation(user, now_location):
+    data = []
+    for org_id in QRCodeUsingRepository.get_organizations(user).values_list('organization__pk', flat=True):
+        organization = OrganizationRepository.get(org_id)
+        data.append({
+            "location_id": organization.location.pk,
+            "category_id": organization.category.pk,
+            "latitude": organization.location.coords[0],
+            "longitude": organization.location.coords[1]
+        })
+    if now_location:
+        data.append({
+            "location_id": -1,
+            "category_id": -1,
+            "latitude": now_location[0],
+            "longitude": now_location[1]
+        })
+    requests.post(url=settings.RECOMMEND_BASE_API_URL, data=data)

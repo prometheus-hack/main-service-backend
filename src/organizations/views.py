@@ -14,7 +14,7 @@ from core.permissions import IsAuthorOrReadOnly
 from business.repositories import QRCodeUsingRepository
 from .repositories import CategoryRepository, OrganizationRepository
 from .serializers import CategorySerializer, OrganizationListSerializer, OrganizationCreateSerializer
-from .services import parse_organizations_to_db
+from .services import parse_organizations_to_db, send_locations_to_recommend_service, get_recommendation
 
 
 # Create your views here.
@@ -121,6 +121,13 @@ class VisitedOrganizationsListAPIView(ListAPIView):
 
     def get_queryset(self):
         return QRCodeUsingRepository.get_organizations(self.request.user)
+
+
+class SendDataToRecommendAPIView(APIView):
+
+    def post(self, request):
+        send_locations_to_recommend_service()
+        return Response(status=status.HTTP_200_OK)
 
 
 class UploadAPIView(APIView):
