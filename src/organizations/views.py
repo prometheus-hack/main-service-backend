@@ -5,6 +5,7 @@ from django.views.decorators.vary import vary_on_cookie
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -101,6 +102,15 @@ class OrganizationByCategoryListAPIView(ListAPIView):
             return OrganizationRepository.get_by_category(int(category))
         else:
             return OrganizationRepository.all()
+
+
+class OwnerOrganizationListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    pagination_class = PageNumberPagination
+    serializer_class = OrganizationListSerializer
+
+    def get_queryset(self):
+        return OrganizationRepository.get_by_owner(self.request.user)
 
 
 class UploadAPIView(APIView):

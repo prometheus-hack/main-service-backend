@@ -49,6 +49,10 @@ class OrganizationRepository(BaseRepository):
         rectangle = Polygon.from_bbox((*coords1, *coords2))
         return cls.get_by_categories(categories).filter(location__coords__within=rectangle)
 
+    @classmethod
+    def get_by_owner(cls, owner):
+        return cls.model.objects.filter(owner=owner)
+
 
 class OrganizationImagesRepository(BaseRepository):
     model = OrganizationImage
