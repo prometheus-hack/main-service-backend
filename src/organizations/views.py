@@ -135,4 +135,3 @@ class UploadAPIView(APIView):
     def post(self, request):
         parse_organizations_to_db(self.request.data)
         return Response({'message': 'da'}, status=status.HTTP_201_CREATED)
-
