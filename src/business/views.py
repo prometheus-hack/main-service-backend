@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from core.permissions import IsOrganizationOwner
 from .repositories import QRCodeUsingRepository, OrganizationAccountRepository
-from .serializers import DetailedUsingQRCodeSerializer, ListUsingQRCodeSerializer, OrganizationAccount
+from .serializers import DetailedUsingQRCodeSerializer, ListUsingQRCodeSerializer, OrganizationAccountSerializer
 from .services import qr_prove
 
 # Create your views here.
@@ -74,20 +74,21 @@ class QrCodeProveAPIView(APIView):
 
 
 class OrganizationAccountCreateAPIView(CreateAPIView):
-    serializer_class = OrganizationAccount
+    serializer_class = OrganizationAccountSerializer
     permission_classes = [IsOrganizationOwner]
     queryset = OrganizationAccountRepository.all()
 
 
 class OrganizationAccountDestroyAPIView(DestroyAPIView):
-    serializer_class = OrganizationAccount
+    serializer_class = OrganizationAccountSerializer
     permission_classes = [IsOrganizationOwner]
     queryset = OrganizationAccountRepository.all()
 
 
 class OrganizationAccountsListAPIView(ListAPIView):
-    serializer_class = OrganizationAccount
+    serializer_class = OrganizationAccountSerializer
     permission_classes = [IsOrganizationOwner]
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         pk = self.kwargs.get('id')
