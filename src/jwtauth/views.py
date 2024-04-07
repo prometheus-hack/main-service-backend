@@ -105,7 +105,8 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         ProfileRepository.create(user=UserRepository.get(serializer.data['email']))
-        QRCodeRepository.create(qr_str=encrypt(serializer.data['email']), user=UserRepository.get(serializer.data['email']))
+        QRCodeRepository.create(qr_str=encrypt(serializer.data['email']),
+                                user=UserRepository.get(serializer.data['email']))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
