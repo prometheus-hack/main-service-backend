@@ -63,12 +63,13 @@ def parse_organizations_to_db(data):
 
 def send_locations_to_recommend_service():
     for org in OrganizationRepository.all():
-        requests.post(url=settings.RECOMMEND_BASE_API_URL + 'add_location/', data={
+        res = requests.post(url=settings.RECOMMEND_BASE_API_URL + 'add_location/', data={
             "location_id": org.location.pk,
             "category_id": org.category.pk,
             "latitude": org.location.coords[0],
             "longitude": org.location.coords[1]
         })
+        print(res.status_code())
 
 
 def get_recommendation(user, now_location):
