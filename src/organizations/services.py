@@ -69,7 +69,7 @@ def send_locations_to_recommend_service():
             "latitude": org.location.coords[0],
             "longitude": org.location.coords[1]
         })
-        print(res.status_code())
+        print(res.status_code)
 
 
 def get_recommendation(user, now_location):
