@@ -13,6 +13,7 @@ urlpatterns = [
     path('categories/', CategoryListAPIView.as_view()),
     path('map/', OrganizationMapFilterAPIView.as_view()),
     path('owner/', OwnerOrganizationListAPIView.as_view()),
-    path('visited/', VisitedOrganizationsListAPIView.as_view())
+    path('visited/', VisitedOrganizationsListAPIView.as_view()),
+    path('rec_data/', SendDataToRecommendAPIView.as_view())
     # path('upload/', UploadAPIView.as_view())
 ] + router.urls
