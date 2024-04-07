@@ -1,5 +1,5 @@
 from core.repositories import BaseRepository, ObjectDoesNotExist
-from .models import CustomUser, Profile, RefreshToken
+from .models import CustomUser, Profile, RefreshToken, QRCode
 
 
 class UserRepository(BaseRepository):
@@ -37,3 +37,11 @@ class RefreshTokenRepository(BaseRepository):
     @classmethod
     def get(cls, token):
         return cls.model.objects.get(token=token)
+
+
+class QRCodeRepository(BaseRepository):
+    model = QRCode
+
+    @classmethod
+    def get(cls, user):
+        return cls.model.objects.get(user=user)

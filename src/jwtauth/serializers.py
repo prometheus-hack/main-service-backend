@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 
 from rest_framework import serializers
 
-from .models import CustomUser, Profile, RefreshToken
+from .models import CustomUser, Profile, QRCode
 from .repositories import UserRepository, ProfileRepository, RefreshTokenRepository
 from .token_generators import generate_rt
 
@@ -116,3 +116,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('user', 'first_name', 'last_name', 'title', 'avatar', 'count_friends', 'count_subscribers')
+
+
+class QRCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QRCode
+        fields = ('qr_str',)

@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .views import RegistrationAPIView, LoginAPIView, CustomUserRetrieveUpdateAPIView, RefreshAPIView, ProfileRetrieveUpdateDestroyAPIView, ProfileRetrieveAPIView, ProfileListAPIView
+from .views import *
 
 app_name = 'jwtauth'
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('profile/<int:id>', ProfileRetrieveAPIView.as_view()),
     path('profiles/', ProfileListAPIView.as_view()),
     path('profile/', ProfileRetrieveUpdateDestroyAPIView.as_view()),
+    path('qr/', QRCodeRetrieveAPIView.as_view()),
     path('', CustomUserRetrieveUpdateAPIView.as_view()),
 ]

@@ -6,6 +6,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from pytz import timezone
 
+from crypto.services import encrypt
 from .managers import CustomUserManager
 from .token_generators import generate_jwt
 
@@ -63,3 +64,14 @@ class Friend(models.Model):
     first = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='first_friend')
     second = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='second_friend')
     approved = models.BooleanField(default=False)
+
+
+class QRCode(models.Model):
+    qr_str = models.CharField(max_length=1024, default='', blank=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        self.qr_str = encrypt(self.user.email)
+

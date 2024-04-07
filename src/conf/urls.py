@@ -25,7 +25,8 @@ from core.openapi import schema_view
 api_urls = [
     path('organizations/', include('organizations.urls')),
     path('user/', include('jwtauth.urls')),
-    path('activity/', include('activities.urls'))
+    path('activity/', include('activities.urls')),
+    path('business/', include('business.urls'))
 ]
 
 urlpatterns = [

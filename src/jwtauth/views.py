@@ -14,8 +14,8 @@ from rest_framework.views import APIView
 
 from core.permissions import IsAuthorOrReadOnly
 from .models import CustomUser, RefreshToken
-from .repositories import RefreshTokenRepository, ProfileRepository, UserRepository
-from .serializers import RegistrationSerializer, LoginSerializer, CustomUserSerializer, ProfileSerializer
+from .repositories import RefreshTokenRepository, ProfileRepository, UserRepository, QRCodeRepository
+from .serializers import RegistrationSerializer, LoginSerializer, CustomUserSerializer, ProfileSerializer, QRCodeSerializer
 from .renderers import CustomUserJSONRenderer
 from .token_generators import generate_rt, generate_jwt
 
@@ -216,3 +216,11 @@ class ProfileListAPIView(ListAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsAdminUser]
     pagination_class = PageNumberPagination
+
+
+class QRCodeRetrieveAPIView(RetrieveAPIView):
+    serializer_class = QRCodeSerializer
+    queryset = QRCodeRepository.all()
+
+    def get_object(self):
+        return QRCodeRepository.get(self.request.user)
